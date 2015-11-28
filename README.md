@@ -8,5 +8,4 @@ scope: {},
         link: function (scope:ISidebarScope) {
 
             scope.Utils = Utils;
-
 '''
