@@ -11,16 +11,6 @@ var Utils;
         function RequestBuilder(verb) {
             this.verb = verb;
         }
-        Object.defineProperty(RequestBuilder.prototype, "userName", {
-            get: function () {
-                return this._userName;
-            },
-            set: function (value) {
-                this._userName = value;
-            },
-            enumerable: true,
-            configurable: true
-        });
         Object.defineProperty(RequestBuilder.prototype, "Verb", {
             get: function () {
                 return this.verb;

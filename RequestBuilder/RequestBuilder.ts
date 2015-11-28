@@ -9,13 +9,6 @@
 
 module Utils {
     export class RequestBuilder {
-        get userName():string {
-            return this._userName;
-        }
-
-        set userName(value:string) {
-            this._userName = value;
-        }
 
         private verb:string;
         private host:string;
