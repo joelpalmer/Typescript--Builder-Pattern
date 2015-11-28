@@ -1,52 +1,163 @@
-//https://msdn.microsoft.com/en-us/library/system.uribuilder%28v=vs.110%29.aspx
-//Eventually should be added to Utils
+/*Design references:
+ http://hc.apache.org/httpcomponents-client-ga/httpclient/apidocs/org/apache/http/client/methods/RequestBuilder.html
+ https://msdn.microsoft.com/en-us/library/System.UriBuilder%28v=vs.110%29.aspx
 
-interface IUri {
+ In the real world project it is used in conjunction with https://docs.angularjs.org/api/ng/service/$http
 
-    fragment: string;
-    host: string;
-    userName: string;
-    password: string;
-    scheme: string;
-    path: string;
-    port: number;
-    query: string;
+ */
 
-}
 
-class UriBuilder{
+module Utils {
+    export class RequestBuilder {
+        get userName():string {
+            return this._userName;
+        }
 
-    public fragment: string;
-    public host: string;
-    public userName: string;
-    public password: string;
-    public scheme: string;
-    public path: string;
-    public port: number;
-    public query: string;
+        set userName(value:string) {
+            this._userName = value;
+        }
 
-    constructor(obj : IUri = {fragment:null, host:"localhost", userName: null, password: null, scheme: "http", path: "/", port: -1, query: null}){
+        private verb:string;
+        private host:string;
+        private _userName:string;
+        private password:string;
+        private scheme:string;
+        private path:string;
+        private port:number;
+        private query:string;
 
-        this.fragment = obj.fragment;
-        this.host = obj.host;
-        this.userName = obj.userName;
-        this.password = obj.password;
-        this.scheme = obj.scheme;
-        this.path = obj.path;
-        this.port = obj.port;
-        this.query = obj.query;
+        constructor(verb:string) {
+
+            this.verb = verb;
+        }
+
+        get Verb() {
+            return this.verb;
+        }
+
+        setHost(value:string):RequestBuilder {
+            this.host = value;
+            return this;
+        }
+
+        get Host() {
+            return this.host;
+        }
+
+        setScheme(value:string):RequestBuilder {
+            this.scheme = value;
+            return this;
+        }
+
+        get Scheme() {
+            return this.scheme;
+
+        }
+
+        setUserName(value:string):RequestBuilder {
+            //this.userName = value;
+            //return this;
+
+            throw new Error("Not Implemented");
+        }
+
+        get UserName() {
+            //return this.userName;
+            throw new Error("Not Implemented");
+        }
+
+        setPort(value:number):RequestBuilder {
+            this.port = value;
+            return this;
+        }
+
+        get Port() {
+            return this.port;
+
+        }
+
+        setPath(value:string):RequestBuilder {
+            this.path = value;
+            return this;
+        }
+
+        get Path() {
+            return this.path;
+
+        }
+
+        setQuery(value:string):RequestBuilder {
+            this.query = value;
+            return this;
+        }
+
+        get Query() {
+            return this.query;
+        }
+
+        build(): Request{
+            return new Request(this);
+        }
+
+
+
+
+
+
+        toString() {
+            return "" + this.scheme + "://" + this.host + this.path;
+        }
+
 
     }
 
-    toString() {
-        return ""+this.scheme+"://"+this.host+this.path;
+    export class Request {
+
+        private verb:string;
+        private host:string;
+        private _userName:string;
+        private password:string;
+        private scheme:string;
+        private path:string;
+        private port:number;
+        private query:string;
+
+        constructor(requestBuilder: RequestBuilder) {
+
+            this.verb = requestBuilder.Verb;
+            this.host = requestBuilder.Host;
+            //this.userName = requestBuilder.userName;
+            //this.password = requestBuilder.password;
+            this.scheme = requestBuilder.Scheme;
+            this.path = requestBuilder.Path;
+            this.port = requestBuilder.Port;
+            this.query = requestBuilder.Query;
+
+        }
+
+        get Verb() {
+            return this.verb;
+        }
+        get Host() {
+            return this.host;
+        }
+        get Scheme() {
+            return this.scheme;
+        }
+        get Path() {
+            return this.path;
+        }
+        get Port() {
+            return this.port;
+        }
+        get Query() {
+            return this.query;
+        }
+
     }
-
-
 }
 
-var urlProps = {};
 
-var myurl = new UriBuilder();
+var myRequest = new Utils.RequestBuilder("get").setHost("blah").build();
 
-console.log(myurl.toString());
+console.log("My Request: " + myRequest.Host);
