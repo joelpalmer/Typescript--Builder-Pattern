@@ -23,7 +23,7 @@ module Utils {
         private password:string;
         private scheme:string;
         private path:string;
-        private port:number;
+        private port:string;
         private query:string;
 
         constructor(verb:string) {
@@ -50,7 +50,7 @@ module Utils {
         }
 
         get Scheme() {
-            return this.scheme;
+            return this.scheme + "://";
 
         }
 
@@ -66,13 +66,13 @@ module Utils {
             throw new Error("Not Implemented");
         }
 
-        setPort(value:number):RequestBuilder {
+        setPort(value:string):RequestBuilder {
             this.port = value;
             return this;
         }
 
         get Port() {
-            return this.port;
+            return ":" + this.port;
 
         }
 
@@ -95,16 +95,9 @@ module Utils {
             return this.query;
         }
 
-        build(): Request{
+        build():Request {
             return new Request(this);
         }
-
-
-
-
-
-
-
 
 
     }
@@ -113,14 +106,14 @@ module Utils {
 
         private verb:string;
         private host:string;
-        private _userName:string;
-        private password:string;
+        //private _userName:string;
+        //private password:string;
         private scheme:string;
         private path:string;
-        private port:number;
+        private port:string;
         private query:string;
 
-        constructor(requestBuilder: RequestBuilder) {
+        constructor(requestBuilder:RequestBuilder) {
 
             this.verb = requestBuilder.Verb;
             this.host = requestBuilder.Host;
@@ -136,30 +129,38 @@ module Utils {
         get Verb() {
             return this.verb;
         }
+
         get Host() {
             return this.host;
         }
+
         get Scheme() {
             return this.scheme;
         }
+
         get Path() {
             return this.path;
         }
+
         get Port() {
             return this.port;
         }
+
         get Query() {
             return this.query;
         }
 
         toString() {
-            return "" + this.scheme + "://" + this.host + this.path;
+            return "" + this.Scheme + this.Host + this.Port + this.Path;
         }
 
     }
 }
 
 
-var myRequest = new Utils.RequestBuilder("get").setScheme("http").setPath("mypath").setHost("localhost").build();
+var myRequest = new Utils.RequestBuilder("get").setScheme("http").setPath("mypath").setHost("localhost").setPort("9999").build();
 
 console.log("My Request: " + myRequest.toString());
+
+var a = <HTMLAnchorElement> document.getElementById("aOutput");
+a.href = myRequest.toString();

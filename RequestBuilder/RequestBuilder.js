@@ -45,7 +45,7 @@ var Utils;
         };
         Object.defineProperty(RequestBuilder.prototype, "Scheme", {
             get: function () {
-                return this.scheme;
+                return this.scheme + "://";
             },
             enumerable: true,
             configurable: true
@@ -69,7 +69,7 @@ var Utils;
         };
         Object.defineProperty(RequestBuilder.prototype, "Port", {
             get: function () {
-                return this.port;
+                return ":" + this.port;
             },
             enumerable: true,
             configurable: true
@@ -156,12 +156,14 @@ var Utils;
             configurable: true
         });
         Request.prototype.toString = function () {
-            return "" + this.scheme + "://" + this.host + this.path;
+            return "" + this.Scheme + this.Host + this.Port + this.Path;
         };
         return Request;
     })();
     Utils.Request = Request;
 })(Utils || (Utils = {}));
-var myRequest = new Utils.RequestBuilder("get").setScheme("http").setPath("mypath").setHost("localhost").build();
+var myRequest = new Utils.RequestBuilder("get").setScheme("http").setPath("mypath").setHost("localhost").setPort("9999").build();
 console.log("My Request: " + myRequest.toString());
+var a = document.getElementById("aOutput");
+a.href = myRequest.toString();
 //# sourceMappingURL=RequestBuilder.js.map
