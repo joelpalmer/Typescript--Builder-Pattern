@@ -1,9 +1,5 @@
-/*Design references:
- http://hc.apache.org/httpcomponents-client-ga/httpclient/apidocs/org/apache/http/client/methods/RequestBuilder.html
- https://msdn.microsoft.com/en-us/library/System.UriBuilder%28v=vs.110%29.aspx
-
+/*
  In the real world project it is used in conjunction with https://docs.angularjs.org/api/ng/service/$http
-
  */
 var Utils;
 (function (Utils) {
