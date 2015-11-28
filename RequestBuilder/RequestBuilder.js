@@ -20,4 +20,4 @@ var UriBuilder = (function () {
 var urlProps = {};
 var myurl = new UriBuilder();
 console.log(myurl.toString());
-//# sourceMappingURL=UriBuilder.js.map
+//# sourceMappingURL=RequestBuilder.js.map
