@@ -80,7 +80,7 @@ var Utils;
         };
         Object.defineProperty(RequestBuilder.prototype, "Path", {
             get: function () {
-                return this.path;
+                return "/" + this.path;
             },
             enumerable: true,
             configurable: true
@@ -98,9 +98,6 @@ var Utils;
         });
         RequestBuilder.prototype.build = function () {
             return new Request(this);
-        };
-        RequestBuilder.prototype.toString = function () {
-            return "" + this.scheme + "://" + this.host + this.path;
         };
         return RequestBuilder;
     })();
@@ -158,10 +155,13 @@ var Utils;
             enumerable: true,
             configurable: true
         });
+        Request.prototype.toString = function () {
+            return "" + this.scheme + "://" + this.host + this.path;
+        };
         return Request;
     })();
     Utils.Request = Request;
 })(Utils || (Utils = {}));
-var myRequest = new Utils.RequestBuilder("get").setHost("blah").build();
-console.log("My Request: " + myRequest.Host);
+var myRequest = new Utils.RequestBuilder("get").setScheme("http").setPath("mypath").setHost("localhost").build();
+console.log("My Request: " + myRequest.toString());
 //# sourceMappingURL=RequestBuilder.js.map

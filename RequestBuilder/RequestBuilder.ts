@@ -82,7 +82,7 @@ module Utils {
         }
 
         get Path() {
-            return this.path;
+            return "/" + this.path;
 
         }
 
@@ -104,9 +104,7 @@ module Utils {
 
 
 
-        toString() {
-            return "" + this.scheme + "://" + this.host + this.path;
-        }
+
 
 
     }
@@ -154,10 +152,14 @@ module Utils {
             return this.query;
         }
 
+        toString() {
+            return "" + this.scheme + "://" + this.host + this.path;
+        }
+
     }
 }
 
 
-var myRequest = new Utils.RequestBuilder("get").setHost("blah").build();
+var myRequest = new Utils.RequestBuilder("get").setScheme("http").setPath("mypath").setHost("localhost").build();
 
-console.log("My Request: " + myRequest.Host);
+console.log("My Request: " + myRequest.toString());
