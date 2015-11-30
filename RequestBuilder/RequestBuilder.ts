@@ -75,8 +75,17 @@ module Utils {
 
         }
 
-        setQuery(value:string):RequestBuilder {
-            this.query = value;
+        setQuery(value:[{key: string; value: string}]):RequestBuilder {
+            var firstPair: string = "?"+value[0].key + "=" + value[0].value;
+            var pairs: string = "";
+
+            for(var i: number = 0; i < value.length; i++ ){
+                if(i > 0)
+                pairs += "&"+value[i].key + "=" + value[i].value;
+            }
+
+
+            this.query = firstPair + pairs;
             return this;
         }
 
@@ -140,14 +149,20 @@ module Utils {
         }
 
         toString() {
-            return "" + this.Scheme + this.Host + this.Port + this.Path;
+            return "" + this.Scheme + this.Host + this.Port + this.Path + this.Query;
         }
 
     }
 }
 
 
-var myRequest = new Utils.RequestBuilder("get").setScheme("http").setPath("mypath").setHost("localhost").setPort("9999").build();
+var myRequest = new Utils.RequestBuilder("get")
+    .setScheme("http")
+    .setPath("mypath")
+    .setHost("localhost")
+    .setPort("9999")
+    .setQuery([{key: "v", value: "t"},{key: "name", value: "me"}, {key: "she", value: "Lola"} ])
+    .build();
 
 console.log("My Request: " + myRequest.toString());
 

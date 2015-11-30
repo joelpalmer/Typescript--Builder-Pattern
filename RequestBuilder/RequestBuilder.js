@@ -72,7 +72,13 @@ var Utils;
             configurable: true
         });
         RequestBuilder.prototype.setQuery = function (value) {
-            this.query = value;
+            var firstPair = "?" + value[0].key + "=" + value[0].value;
+            var pairs = "";
+            for (var i = 0; i < value.length; i++) {
+                if (i > 0)
+                    pairs += "&" + value[i].key + "=" + value[i].value;
+            }
+            this.query = firstPair + pairs;
             return this;
         };
         Object.defineProperty(RequestBuilder.prototype, "Query", {
@@ -142,13 +148,19 @@ var Utils;
             configurable: true
         });
         Request.prototype.toString = function () {
-            return "" + this.Scheme + this.Host + this.Port + this.Path;
+            return "" + this.Scheme + this.Host + this.Port + this.Path + this.Query;
         };
         return Request;
     })();
     Utils.Request = Request;
 })(Utils || (Utils = {}));
-var myRequest = new Utils.RequestBuilder("get").setScheme("http").setPath("mypath").setHost("localhost").setPort("9999").build();
+var myRequest = new Utils.RequestBuilder("get")
+    .setScheme("http")
+    .setPath("mypath")
+    .setHost("localhost")
+    .setPort("9999")
+    .setQuery([{ key: "v", value: "t" }, { key: "name", value: "me" }, { key: "she", value: "Lola" }])
+    .build();
 console.log("My Request: " + myRequest.toString());
 var a = document.getElementById("aOutput");
 a.href = myRequest.toString();
