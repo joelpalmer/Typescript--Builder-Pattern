@@ -30,7 +30,13 @@ module Utils {
         }
 
         get Host() {
-            return this.host;
+            if (this.host) {
+                return this.host;
+            }
+            else {
+                return "";
+            }
+
         }
 
         setScheme(value:string):RequestBuilder {
@@ -39,7 +45,14 @@ module Utils {
         }
 
         get Scheme() {
-            return this.scheme + "://";
+            if (this.scheme) {
+                return this.scheme + "://";
+            }
+            else {
+                return "";
+            }
+
+
 
         }
 
@@ -61,7 +74,14 @@ module Utils {
         }
 
         get Port() {
-            return ":" + this.port;
+
+            if (this.port) {
+                return ":" + this.port;
+            }
+            else {
+                return "";
+            }
+
 
         }
 
@@ -71,26 +91,34 @@ module Utils {
         }
 
         get Path() {
+
             return "/" + this.path;
 
         }
 
         setQuery(value:[{key: string; value: string}]):RequestBuilder {
-            var firstPair: string = "?"+value[0].key + "=" + value[0].value;
-            var pairs: string = "";
 
-            for(var i: number = 0; i < value.length; i++ ){
-                if(i > 0)
-                pairs += "&"+value[i].key + "=" + value[i].value;
+            var firstPair:string = "?" + value[0].key + "=" + value[0].value;
+            var pairs:string = "";
+
+            for (var i:number = 0; i < value.length; i++) {
+                if (i > 0)
+                    pairs += "&" + value[i].key + "=" + value[i].value;
             }
 
 
             this.query = firstPair + pairs;
+
             return this;
         }
 
         get Query() {
-            return this.query;
+            if (this.query) {
+                return this.query;
+            }
+            else {
+                return "";
+            }
         }
 
         build():Request {
@@ -149,7 +177,7 @@ module Utils {
         }
 
         toString() {
-            return "" + this.Scheme + this.Host + this.Port + this.Path + this.Query;
+            return ""+ this.Scheme + this.Host + this.Port + this.Path + this.Query;
         }
 
     }

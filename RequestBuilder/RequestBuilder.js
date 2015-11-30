@@ -20,7 +20,12 @@ var Utils;
         };
         Object.defineProperty(RequestBuilder.prototype, "Host", {
             get: function () {
-                return this.host;
+                if (this.host) {
+                    return this.host;
+                }
+                else {
+                    return "";
+                }
             },
             enumerable: true,
             configurable: true
@@ -31,7 +36,12 @@ var Utils;
         };
         Object.defineProperty(RequestBuilder.prototype, "Scheme", {
             get: function () {
-                return this.scheme + "://";
+                if (this.scheme) {
+                    return this.scheme + "://";
+                }
+                else {
+                    return "";
+                }
             },
             enumerable: true,
             configurable: true
@@ -55,7 +65,12 @@ var Utils;
         };
         Object.defineProperty(RequestBuilder.prototype, "Port", {
             get: function () {
-                return ":" + this.port;
+                if (this.port) {
+                    return ":" + this.port;
+                }
+                else {
+                    return "";
+                }
             },
             enumerable: true,
             configurable: true
@@ -83,7 +98,12 @@ var Utils;
         };
         Object.defineProperty(RequestBuilder.prototype, "Query", {
             get: function () {
-                return this.query;
+                if (this.query) {
+                    return this.query;
+                }
+                else {
+                    return "";
+                }
             },
             enumerable: true,
             configurable: true
